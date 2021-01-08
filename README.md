@@ -1,70 +1,55 @@
-# xiwen-tooltip
-
 ## 需求 与 功能
 
-> 该功能实现了文字过长时溢出裁切显示... 鼠标滑上使用 tooltip 显示全部内容  
-> 文字少时，没有裁切，鼠标滑上不显示 tooltip
+> 该功能实现了中国内的省市区的三级联动，基于 antd-vue 中的 Cascader 做的组件，支持原有的所有功能
 
-#### 在表格中使用
+#### 效果展示
 
-##### 效果展示
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108152054282.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMwOTM3NA==,size_16,color_FFFFFF,t_70)
 
-![希文插件功能](https://img-blog.csdnimg.cn/20201210113319367.gif)
+#### 支持联想搜索
 
-#### 在普通循环 list 中使用
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108152127569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMwOTM3NA==,size_16,color_FFFFFF,t_70)
 
-##### 效果展示
+#### 支持显示部分省份
 
-![文字少时](https://img-blog.csdnimg.cn/20201210151224677.gif)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210108152154566.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMwOTM3NA==,size_16,color_FFFFFF,t_70)
 
 ###### 例子（本例子是基于 antd 做的，在 element-ui，或者是 iview 中，同样适用）
 
 ```html
 <template>
-  <div class="box">
-    <XiwenTooltip
-      title="鼠标滑上使用 tooltip 显示全部内容 文字少时，没有裁切，鼠标滑上不显示 tooltip 希文出品 必属精品"
-    />
-  </div>
+  <AreaCascader v-model="data1" />
 </template>
-<style lang="less">
-  .box {
-    width: 200px;
-    height: 50px;
-    border: 1px solid #000;
-  }
-</style>
 ```
 
 ### API
 
-**下面只列出了在本插件中二次封装添加的新字段，和部分原有 antd-vue 中 tooltip 部分默认的配置**  
-**具体的 antd-vue 中 tooltip api 配置请点击下面链接，查看官方文档**
-https://www.antdv.com/components/tooltip-cn/#API
+**下面只列出了在本插件中二次封装添加的新字段，和部分原有 antd-vue 中 Cascader 部分默认的配置**  
+**具体的 antd-vue 中 Cascader api 配置请点击下面链接，查看官方文档**
+https://www.antdv.com/components/cascader-cn/
 
-| 参数             | 说明                    | 类型     | 默认值           |
-| ---------------- | ----------------------- | -------- | ---------------- |
-| title            | 需要 Tooltip 显示的文本 | _string_ | -                |
-| detail           | 初始值                  | _object_ | -                |
-| btnText          | 按钮文本                | _string_ | -                |
-| cuttingNum       | 显示几行后开始裁切      | _Number_ | 2                |
-| placement        | 气泡框位置              | _string_ | rightTop         |
-| overlayClassName | 卡片类名                | _string_ | xiwen-preinstall |
+| 参数           | 说明                                         | 类型      | 默认值                                               |
+| -------------- | -------------------------------------------- | --------- | ---------------------------------------------------- |
+| expandTrigger  | 滑上展示下一级                               | _string_  | hover                                                |
+| changeOnSelect | 点击选中 省市区，不用选择三级                | _boolean_ | true                                                 |
+| placeholder    | 提示信息                                     | _string_  | 请搜索                                               |
+| filterProvince | 外部传入的部分省 只显示部分省市区            | _array_   | []                                                   |
+| fieldNames     | 自定义 options 中 label name children 的字段 | _Object_  | { label: 'name', value: 'id', children: 'children' } |
 
 #### 注：
 
-- 本插件相当于是对 antd-vue 组件 tooltip 的二次封装，支持 tooltip 原生组件的==所有 api 功能==
+- 本插件相当于是对 antd-vue 组件 Cascader 的二次封装，支持 Cascader 原生组件的==所有 api 功能==
 - 适用于在表格中展示，或者是正常的页面循环
-- 但是如果想要调用原生 ui 组件的实例方法，通知 ref 绑定获取到的并不是 antd 的 tooltip 组件，如果想要调用 tooltip 的原生方法，==需要传递 forward-ref 参数绑定==
+- 但是如果想要调用原生 ui 组件的实例方法，通知 ref 绑定获取到的并不是 antd 的 Cascader 组件，如果想要调用 Cascader 的原生方法，==需要传递 forward-ref 参数绑定==
 
 ```html
 <template>
-  <XiwenTooltip @forward-ref="tooltip" title="希文出品"></XiwenTooltip>
+  <AreaCascader @forward-ref="Cascader"></AreaCascader>
 </template>
 
 <script>
   // 即可调用原生方法
-  this.$refs.tooltip.visibleChange(callback);
+  this.$refs.Cascader.blur();
 </script>
 ```
 
@@ -72,24 +57,24 @@ https://www.antdv.com/components/tooltip-cn/#API
 
 ### npm 插件地址
 
-[https://www.npmjs.com/package/xiwen-tooltip](https://www.npmjs.com/package/xiwen-tooltip)
+[https://www.npmjs.com/package/vue-area-cascader](https://www.npmjs.com/package/vue-area-cascader)
 
 ### 源码 觉得不错的 动动小手点个 star 三克油
 
-[https://github.com/li1164267803/xiwen-tooltip](https://github.com/li1164267803/xiwen-tooltip)
+[https://github.com/li1164267803/vue-area-cascader](https://github.com/li1164267803/vue-area-cascader)
 
 ### CSDN 博客
 
-[https://blog.csdn.net/weixin_44309374/article/details/110949487](https://blog.csdn.net/weixin_44309374/article/details/110949487)
+[https://blog.csdn.net/weixin_44309374/article/details/112365552](https://blog.csdn.net/weixin_44309374/article/details/112365552)
 
 ### demo 地址
 
-[https://github.com/li1164267803/xiwen-tooltip/tree/master/docs-src](https://github.com/li1164267803/xiwen-tooltip/tree/master/docs-src)
+[https://github.com/li1164267803/vue-area-cascader/tree/master/docs-src](https://github.com/li1164267803/vue-area-cascader/tree/master/docs-src)
 
 ## 编译 vue 插件的模板
 
 **想要自己编译 vue 插件的，可以直接使用我这个模板**
-[vue 编译组件模板](https://github.com/li1164267803/xiwen-tooltip)
+[vue 编译组件模板](https://github.com/li1164267803/vue-area-cascader)
 
 ### package.json
 
